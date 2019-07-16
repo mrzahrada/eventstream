@@ -18,9 +18,12 @@ type KinesisStreamer struct {
 }
 
 // NewKinesisStreamer -
-func NewKinesisStreamer() streamer.Streamer {
+func NewKinesisStreamer() (streamer.Streamer, error) {
 
-	sess := session.Must(session.NewSession())
+	sess, err := session.NewSession()
+	if err != nil {
+		return nil, err
+	}
 
 	stream := kinesis.New(sess, &aws.Config{
 		Region: aws.String(endpoints.EuWest1RegionID),
@@ -28,7 +31,7 @@ func NewKinesisStreamer() streamer.Streamer {
 
 	return KinesisStreamer{
 		stream: stream,
-	}
+	}, nil
 }
 
 // Push implementes Streamer interface
