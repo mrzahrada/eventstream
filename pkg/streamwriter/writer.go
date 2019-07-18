@@ -1,4 +1,4 @@
-package writer
+package streamwriter
 
 import (
 	"context"
@@ -22,6 +22,7 @@ func (writer *Writer) Commit(event event.Event) {
 }
 
 // Push data to streamer
+// TODO: describe failed writes
 func (writer Writer) Push(ctx context.Context) error {
 
 	defer writer.Clear()
